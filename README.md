@@ -1,3 +1,3 @@
 # ConversorGramatica
 
-Trabalho final da cadeira Linguagem e Automâtos finitos 
+Trabalho final da cadeira Linguagem e Autômatos finitos 
