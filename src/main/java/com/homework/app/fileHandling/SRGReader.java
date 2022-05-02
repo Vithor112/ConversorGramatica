@@ -42,7 +42,7 @@ public class SRGReader {
             readVariables();
             readUntilSymbol('{');
             readTerminals();
-            readUntilSymbol('<');
+            readUntilSymbol(',');
             String prodName = getName(',');
             String initial = getName(')');
             srg.setInitial(new Variable(initial.charAt(0)));
@@ -60,12 +60,18 @@ public class SRGReader {
     private void readProductions() throws IOException, InvalidSRG{
         int ch;
         char variableLeftSide;
+        ArrayList<Character> separators = new ArrayList<Character>( Arrays.asList('-','>') );
         while ((ch = fileReader.read()) != -1){
             Production prod = new Production();
-            while((char)(ch = fileReader.read()) == ' ' ||(char)(ch = fileReader.read()) == '\n' );
+            while(ch <= 32  && ch != -1)
+                ch = fileReader.read();
+            if (ch == -1)
+                break;
             prod.setOriginalVar(new Variable((char) ch));
-            ArrayList<Character> separators = new ArrayList<Character>( Arrays.asList('-', ' ', '>') );
-            while(separators.contains((char)(ch = fileReader.read())));
+            ch = fileReader.read();
+            while(separators.contains((char)ch) || (ch <= 32  && (char) ch != '\n' && (char) ch != '\r')){
+                ch = fileReader.read();
+            }
             if (Terminal.getSymbolsAllowed().contains((char)ch)) {
                 prod.getGeneratedWord().setTerminal(new Terminal((char) ch));
                 ch = fileReader.read();
@@ -98,14 +104,16 @@ public class SRGReader {
 
     private void readVariables() throws  IOException, InvalidFile, InvalidSRG {
         int ch;
-        while ((char) (ch = fileReader.read()) == '}') {
+        while ((char) (ch = fileReader.read()) != '}') {
             if (ch == -1) {
                 throw invalidFormat;
             }
             if ((char) ch == ',')
                 continue;
-            if ((char) ch != ' ')
+            if ((char) ch != ' ') {
+                Variable.addSymbolsAllowed((char) ch);
                 srg.addVariable(new Variable((char) ch));
+            }
 
 
         }
@@ -113,15 +121,16 @@ public class SRGReader {
 
     private void readTerminals() throws  IOException, InvalidFile, InvalidSRG {
         int ch;
-        while ((char) (ch = fileReader.read()) == '}') {
-            ch = fileReader.read();
+        while ((char) (ch = fileReader.read()) != '}') {
             if (ch == -1) {
                 throw invalidFormat;
             }
             if ((char) ch == ',')
                 continue;
-            if ((char) ch != ' ')
+            if ((char) ch != ' ') {
+                Terminal.addSymbolsAllowed((char)ch);
                 srg.addTerminal(new Terminal((char) ch));
+            }
 
 
         }
