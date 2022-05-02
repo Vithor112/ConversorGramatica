@@ -3,56 +3,49 @@ package com.homework.app.structs.FSA;
 import com.homework.app.structs.SRG.Variable;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.stream.Collectors;
 
 // Finite-state automaton
 public class FSA {
-    private final ArrayList<State> states;
-    private final ArrayList<Transition> transitions;
+
+    private final HashMap<Variable, State> states;
+    private final HashMap<State, Transition> transitions;
 
 
     public FSA(){
-        states = new ArrayList<>();
-        transitions = new ArrayList<>();
+        states = new HashMap<>();
+        transitions = new HashMap<>();
     }
-    public ArrayList<State> getStates() {
+    public HashMap<Variable, State> getStates() {
         return states;
     }
 
-    public ArrayList<Transition> getTransitions() {
+    public HashMap<State, Transition> getTransitions() {
         return transitions;
     }
 
-    public void addState(State state) {
-        this.states.add(state);
+    public void addState(Variable var, State state) {
+        this.states.put(var, state);
     }
 
-    public void addTransition(Transition transition){
-        this.transitions.add(transition);
+    public void addTransition(State state, Transition transition){
+        this.transitions.put(state, transition);
     }
 
-    public State getCorrespondentState(Variable var){
-        for (State state : states){
-            if (state.getVariableCorrespondent().equals(var))
-                return state;
-        }
-        return null;
+    public State getCorrespondentState(Variable variable){
+        return states.get(variable);
     }
 
     public State getFinalState(){
-        for (State state : states){
-            if (state.isFinalState())
-                return state;
-        }
-        return null;
+        return states.get(null);
     }
-
     @Override
     public String toString() {
         return "FSA{" +
-                "states=" + states.stream().map(Object::toString)
+                "states=" + states.values().stream().map(Object::toString)
                 .collect(Collectors.joining(", ")) +
-                ", transitions=" + transitions.stream().map(Object::toString)
+                ", transitions=" + transitions.values().stream().map(Object::toString)
                 .collect(Collectors.joining(", ")) +
                 '}';
     }

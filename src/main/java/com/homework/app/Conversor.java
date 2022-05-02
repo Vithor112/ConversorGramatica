@@ -6,6 +6,7 @@ import com.homework.app.structs.FSA.State;
 import com.homework.app.structs.FSA.Transition;
 import com.homework.app.structs.SRG.Production;
 import com.homework.app.structs.SRG.SRG;
+import com.homework.app.structs.SRG.Terminal;
 import com.homework.app.structs.SRG.Variable;
 
 public class Conversor {
@@ -27,24 +28,24 @@ public class Conversor {
 
     private FSA convertGrammarToAutomaton(){
         FSA fsa = new FSA();
-
+        Alphabet.setSymbolsAllowed(Terminal.getSymbolsAllowed());
         int counter = 0;
         for (Variable var : grammar.getVariables()){
-            State s = new State(var, "q"+counter, false);
-            fsa.addState(s);
+            State s = new State( "q"+counter, false);
+            fsa.addState(var, s);
             counter++;
 
-            if (s.getVariableCorrespondent().equals(grammar.getInitial())){
+            if (var.equals(grammar.getInitial())){
                 s.setInitialState(true);
             }
         }
-        fsa.addState(new State(null, "qf", true));
+        fsa.addState(null, new State("qf", true));
 
         for (Production prod : grammar.getProductions()){
             State actual = fsa.getCorrespondentState(prod.getOriginalVar());
             State next = prod.getGeneratedWord().getVariable() !=  null ? fsa.getCorrespondentState(prod.getGeneratedWord().getVariable()) : fsa.getFinalState();
             Alphabet symbol = new Alphabet(prod.getGeneratedWord().getTerminal() !=  null ? prod.getGeneratedWord().getTerminal().getSymbol() : null );
-            fsa.addTransition(new Transition(actual,next,symbol));
+            fsa.addTransition(actual, new Transition(actual,next,symbol));
         }
         return fsa;
     }

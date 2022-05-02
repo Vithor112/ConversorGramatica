@@ -5,6 +5,7 @@ import com.homework.app.structs.SRG.Terminal;
 import java.util.ArrayList;
 
 public class Alphabet  {
+    private static ArrayList<Character> SymbolsAllowed = null;
     private final Character symbol;
 
     public Character getSymbol() {
@@ -20,5 +21,13 @@ public class Alphabet  {
         return "Alphabet{" +
                 "symbol='" + symbol + '\'' +
                 '}';
+    }
+
+    public static ArrayList<Character> getSymbolsAllowed() {
+        return SymbolsAllowed;
+    }
+
+    public static void setSymbolsAllowed(ArrayList<Character> symbolsAllowed) {
+        SymbolsAllowed = symbolsAllowed;
     }
 }
