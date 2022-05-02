@@ -2,19 +2,18 @@ package com.homework.app;
 
 
 import com.homework.app.fileHandling.SRGReader;
-import com.homework.app.structs.SRG.SRG;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileSystemView;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.rmi.server.ExportException;
 
 public class MainGUI extends JPanel {
     public JPanel panel1;
     private JButton insiraArquivoGLUDButton;
     private JButton insiraArquivoListaDeButton;
+    private JLabel SRGLabel;
     private JFileChooser fc;
     private File SRGFile = null;
 
@@ -31,7 +30,9 @@ public class MainGUI extends JPanel {
                     SRGFile = fc.getSelectedFile();
                     try {
                         SRGReader srgReader = new SRGReader(SRGFile);
+                        SRGLabel.setText(srgReader.getSrg().getName());
                     } catch (Exception e){
+                        SRGLabel.setText(e.getMessage());
                         System.out.println(e.getMessage());
                     }
 

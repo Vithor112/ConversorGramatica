@@ -36,8 +36,7 @@ public class SRGReader {
                 throw new InvalidFile("File is not readable!", "SRG", file.getName());
             this.fileReader = new FileReader(file);
             int ch;
-            // TODO readName SRG
-            getName('=');
+            srg.setName(getName('='));
             readUntilSymbol('{');
             readVariables();
             readUntilSymbol('{');
@@ -57,7 +56,7 @@ public class SRGReader {
         }
     }
 
-    private void readProductions() throws IOException, InvalidSRG{
+    private void readProductions() throws IOException, InvalidSRG, InvalidFile {
         int ch;
         char variableLeftSide;
         ArrayList<Character> separators = new ArrayList<Character>( Arrays.asList('-','>') );
@@ -69,14 +68,19 @@ public class SRGReader {
                 break;
             prod.setOriginalVar(new Variable((char) ch));
             ch = fileReader.read();
-            while(separators.contains((char)ch) || (ch <= 32  && (char) ch != '\n' && (char) ch != '\r')){
+            int counter = 0;
+            while(((ch <= 32  && (char) ch != '\n' && (char) ch != '\r') || separators.contains((char)ch) && ch != -1)){
+                if (separators.contains((char)ch))
+                    counter++;
                 ch = fileReader.read();
             }
-            if (Terminal.getSymbolsAllowed().contains((char)ch)) {
+            if (counter != 2)
+                throw invalidFormat;
+            if (ch > 32) {
                 prod.getGeneratedWord().setTerminal(new Terminal((char) ch));
                 ch = fileReader.read();
             }
-            if (Variable.getSymbolsAllowed().contains((char)ch))
+            if (ch > 32)
                 prod.getGeneratedWord().setVariable(new Variable((char)ch));
             srg.addProduction(prod);
 
@@ -157,7 +161,7 @@ public class SRGReader {
         }
     }
 
-    private SRG getSrg(){
+    public SRG getSrg(){
         return srg;
     }
 

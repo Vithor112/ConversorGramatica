@@ -3,6 +3,7 @@ package com.homework.app.structs.SRG;
 import java.util.ArrayList;
 // Strictly regular grammar
 public class SRG {
+    private String name;
     private Variable initial;
     private final ArrayList<Production> productions;
     private final ArrayList<Variable> variables;
@@ -44,6 +45,14 @@ public class SRG {
 
     public Variable getInitial() {
         return initial;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
 }
