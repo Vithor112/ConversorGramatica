@@ -5,9 +5,11 @@ import com.homework.app.fileHandling.SRGReader;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileSystemView;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+
 
 public class MainGUI extends JPanel {
     public JPanel panel1;
@@ -39,6 +41,7 @@ public class MainGUI extends JPanel {
                 }
             }
         });
+
 
     }
 
