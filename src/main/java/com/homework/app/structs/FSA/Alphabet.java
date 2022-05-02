@@ -5,19 +5,14 @@ import com.homework.app.structs.SRG.Terminal;
 import java.util.ArrayList;
 
 public class Alphabet  {
-    private static ArrayList<String> symbolsAllowed;
-    private final String symbol;
+    private final char symbol;
 
-    public String getSymbol() {
+    public char getSymbol() {
         return symbol;
     }
 
-    public Alphabet(String symbol) {
+    public Alphabet(char symbol) {
         this.symbol = symbol;
-    }
-
-    public static void setSymbolsAllowed(ArrayList<String> symbolsAllowed) {
-        Alphabet.symbolsAllowed = symbolsAllowed;
     }
 
     @Override

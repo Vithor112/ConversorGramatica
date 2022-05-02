@@ -6,10 +6,8 @@ import com.homework.app.structs.SRG.*;
 import javax.swing.*;
 import java.util.ArrayList;
 
-/**
- * Hello world!
- *
- */
+import static javax.swing.JFrame.EXIT_ON_CLOSE;
+
 public class App 
 {
     public static void main( String[] args )
@@ -18,6 +16,7 @@ public class App
         main.setContentPane(new MainGUI().panel1);
         main.setSize(500,700);
         main.setVisible(true);
+        main.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
 // TEST CONVERSION
 //        try {

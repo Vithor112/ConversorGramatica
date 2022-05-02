@@ -6,29 +6,33 @@ import com.homework.app.exceptions.InvalidSRG;
 import java.util.ArrayList;
 
 public class Variable {
-    private static ArrayList<String> symbolsAllowed;
-    private final String symbol;
+    private final static ArrayList<Character> symbolsAllowed = new ArrayList<>();
+    private final char symbol;
 
-    public Variable(String symbol) throws InvalidSRG{
+    public Variable(char symbol) throws InvalidSRG{
         if (!symbolsAllowed.contains(symbol)){
             throw new InvalidSRG(" Variable " + symbol + " is not listed in the grammar definition!");
         }
         this.symbol = symbol;
     }
 
-    public String getSymbol() {
+    public char getSymbol() {
         return symbol;
     }
 
     @Override
     public boolean equals(Object o) {
         if (o instanceof Variable)
-            return ((Variable) o).getSymbol().equals(symbol);
+            return (((Variable) o).getSymbol() == symbol);
         return false;
     }
 
-    public static void setSymbolsAllowed(ArrayList<String> symbolsAllowed) {
-        Variable.symbolsAllowed = symbolsAllowed;
+    public static void addSymbolsAllowed(char symbol) {
+        Variable.symbolsAllowed.add(symbol);
+    }
+
+    public static void clearSymbolsAllowed(){
+        Variable.symbolsAllowed.clear();
     }
 
 

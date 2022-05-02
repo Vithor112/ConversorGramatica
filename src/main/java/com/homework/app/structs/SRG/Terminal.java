@@ -6,22 +6,26 @@ import com.homework.app.exceptions.InvalidSRG;
 import java.util.ArrayList;
 
 public class Terminal {
-    private static ArrayList<String> symbolsAllowed;
-    private final String symbol;
+    private final static ArrayList<Character> symbolsAllowed = new ArrayList<>();
+    private final char symbol;
 
-    public Terminal(String symbol) throws InvalidSRG {
+    public Terminal(char symbol) throws InvalidSRG {
         if (!symbolsAllowed.contains(symbol)){
             throw new InvalidSRG(" Terminal " + symbol + " is not listed in the grammar definition!");
         }
         this.symbol = symbol;
     }
 
-    public String getSymbol() {
+    public char getSymbol() {
         return symbol;
     }
 
-    public static void setSymbolsAllowed(ArrayList<String> symbolsAllowed) {
-            Terminal.symbolsAllowed = symbolsAllowed;
+    public static void addSymbolsAllowed(char symbol) {
+            Terminal.symbolsAllowed.add(symbol);
+    }
+
+    public static void clearSymbolsAllowed(){
+        Terminal.symbolsAllowed.clear();
     }
 
 
