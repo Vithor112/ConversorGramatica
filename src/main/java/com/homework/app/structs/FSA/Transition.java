@@ -24,4 +24,12 @@ public class Transition {
     }
 
 
+    @Override
+    public String toString() {
+        return "Transition{" +
+                "actualState=" + actualState +
+                ", nextState=" + nextState +
+                ", symbol=" + symbol +
+                '}';
+    }
 }

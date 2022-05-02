@@ -20,10 +20,22 @@ public class Variable {
         return symbol;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Variable)
+            return ((Variable) o).getSymbol().equals(symbol);
+        return false;
+    }
 
     public static void setSymbolsAllowed(ArrayList<String> symbolsAllowed) {
         Variable.symbolsAllowed = symbolsAllowed;
     }
 
 
+    @Override
+    public String toString() {
+        return "Variable{" +
+                "symbol='" + symbol + '\'' +
+                '}';
+    }
 }

@@ -19,4 +19,11 @@ public class Alphabet  {
     public static void setSymbolsAllowed(ArrayList<String> symbolsAllowed) {
         Alphabet.symbolsAllowed = symbolsAllowed;
     }
+
+    @Override
+    public String toString() {
+        return "Alphabet{" +
+                "symbol='" + symbol + '\'' +
+                '}';
+    }
 }
