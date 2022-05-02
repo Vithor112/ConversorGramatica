@@ -17,6 +17,7 @@ public class App
         main.setSize(500,700);
         main.setVisible(true);
         main.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        main.setLocationRelativeTo(null);
 // TEST CONVERSION
 //        try {
 //            ArrayList<Production> prod = new ArrayList<>();

@@ -5,13 +5,13 @@ import com.homework.app.structs.SRG.Terminal;
 import java.util.ArrayList;
 
 public class Alphabet  {
-    private final char symbol;
+    private final Character symbol;
 
-    public char getSymbol() {
+    public Character getSymbol() {
         return symbol;
     }
 
-    public Alphabet(char symbol) {
+    public Alphabet(Character symbol) {
         this.symbol = symbol;
     }
 
