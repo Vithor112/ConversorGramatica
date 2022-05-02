@@ -42,4 +42,9 @@ public class Variable {
                 "symbol='" + symbol + '\'' +
                 '}';
     }
+
+    public static ArrayList<Character> getSymbolsAllowed(){
+        return symbolsAllowed;
+    }
+
 }

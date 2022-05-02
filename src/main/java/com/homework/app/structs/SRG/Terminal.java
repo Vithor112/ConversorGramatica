@@ -28,5 +28,9 @@ public class Terminal {
         Terminal.symbolsAllowed.clear();
     }
 
+    public static ArrayList<Character> getSymbolsAllowed(){
+        return symbolsAllowed;
+    }
+
 
 }

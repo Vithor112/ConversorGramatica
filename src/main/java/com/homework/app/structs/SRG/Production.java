@@ -1,14 +1,13 @@
 package com.homework.app.structs.SRG;
 
 public class Production {
-    private final Variable originalVar;
-    private final Word generatedWord;
+    private Variable originalVar;
+    private Word generatedWord;
 
-    public Production(Variable originalVar, Word generatedWord) {
+    public void setOriginalVar(Variable originalVar) {
         this.originalVar = originalVar;
-        this.generatedWord = generatedWord;
     }
-
+    
     public Word getGeneratedWord() {
         return generatedWord;
     }

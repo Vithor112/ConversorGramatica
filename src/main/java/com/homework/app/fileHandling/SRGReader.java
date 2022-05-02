@@ -2,6 +2,7 @@ package com.homework.app.fileHandling;
 
 import com.homework.app.exceptions.InvalidFile;
 import com.homework.app.exceptions.InvalidSRG;
+import com.homework.app.structs.SRG.Production;
 import com.homework.app.structs.SRG.SRG;
 import com.homework.app.structs.SRG.Terminal;
 import com.homework.app.structs.SRG.Variable;
@@ -10,6 +11,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class SRGReader {
     private final File file;
@@ -18,9 +21,10 @@ public class SRGReader {
 
     private SRG srg;
 
-    public SRGReader(File file){
+    public SRGReader(File file) throws InvalidSRG, InvalidFile{
         this.file = file;
         this.invalidFormat = new InvalidFile("File is in an invalid format! ", "SRG", file.getName());
+        readFile();
     }
 
     private SRG readFile() throws InvalidFile, InvalidSRG{
@@ -41,24 +45,36 @@ public class SRGReader {
             readUntilSymbol('<');
             String prodName = getName(',');
             String initial = getName(')');
-            srg.setInitial(new Variable(initial));
+            srg.setInitial(new Variable(initial.charAt(0)));
             readName(prodName);
-
-
-
+            readProductions();
+            return srg;
         } catch(IOException e){
             if (e instanceof  FileNotFoundException)
                 throw new InvalidFile("File was not found!", "SRG", file.getName());
             throw new InvalidFile("An error occurred", "SRG", file.getName());
 
         }
-
-        return null;
     }
 
-    private void readProductions(){
+    private void readProductions() throws IOException, InvalidSRG{
         int ch;
-        while (ch )
+        char variableLeftSide;
+        while ((ch = fileReader.read()) != -1){
+            Production prod = new Production();
+            while((char)(ch = fileReader.read()) == ' ' ||(char)(ch = fileReader.read()) == '\n' );
+            prod.setOriginalVar(new Variable((char) ch));
+            ArrayList<Character> separators = new ArrayList<Character>( Arrays.asList('-', ' ', '>') );
+            while(separators.contains((char)(ch = fileReader.read())));
+            if (Terminal.getSymbolsAllowed().contains((char)ch)) {
+                prod.getGeneratedWord().setTerminal(new Terminal((char) ch));
+                ch = fileReader.read();
+            }
+            if (Variable.getSymbolsAllowed().contains((char)ch))
+                prod.getGeneratedWord().setVariable(new Variable((char)ch));
+            srg.addProduction(prod);
+
+        }
     }
 
     private void readName(String name) throws IOException, InvalidFile{
@@ -82,46 +98,33 @@ public class SRGReader {
 
     private void readVariables() throws  IOException, InvalidFile, InvalidSRG {
         int ch;
-        StringBuilder stringBuilder= new StringBuilder();
-        while ( true ){
-            ch = fileReader.read();
-            if (ch == -1){
+        while ((char) (ch = fileReader.read()) == '}') {
+            if (ch == -1) {
                 throw invalidFormat;
             }
-            if ((char)ch == ',' || (char)ch == '}') {
-                Variable.addSymbolsAllowed(stringBuilder.toString());
-                srg.addVariable(new Variable(stringBuilder.toString()));
-                stringBuilder.delete(0, stringBuilder.length());
-                if ((char)ch == '}')
-                    break;
+            if ((char) ch == ',')
                 continue;
-            }
             if ((char) ch != ' ')
-                stringBuilder.append((char)ch);
-            }
+                srg.addVariable(new Variable((char) ch));
+
 
         }
+    }
 
     private void readTerminals() throws  IOException, InvalidFile, InvalidSRG {
         int ch;
-        StringBuilder stringBuilder= new StringBuilder();
-        while ( true ){
+        while ((char) (ch = fileReader.read()) == '}') {
             ch = fileReader.read();
-            if (ch == -1){
+            if (ch == -1) {
                 throw invalidFormat;
             }
-            if ((char)ch == ',' || (char)ch == '}') {
-                Terminal.addSymbolsAllowed(stringBuilder.toString());
-                srg.addTerminal(new Terminal(stringBuilder.toString()));
-                stringBuilder.delete(0, stringBuilder.length());
-                if ((char)ch == '}')
-                    break;
+            if ((char) ch == ',')
                 continue;
-            }
             if ((char) ch != ' ')
-                stringBuilder.append((char)ch);
-        }
+                srg.addTerminal(new Terminal((char) ch));
 
+
+        }
     }
 
     private String getName(char terminator) throws  IOException, InvalidFile{
@@ -143,6 +146,10 @@ public class SRGReader {
                 throw invalidFormat;
             }
         }
+    }
+
+    private SRG getSrg(){
+        return srg;
     }
 
 }
