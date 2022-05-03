@@ -54,6 +54,8 @@ public class MainGUI extends JPanel {
                         wordListReader = new WordListReader(wordListFile);
                         processaPalavrasButton.setEnabled(true);
                     } catch (Exception e) {
+                        JOptionPane.showMessageDialog(panel1, e.getMessage(), "ERROR",
+                                JOptionPane.ERROR_MESSAGE);
                         System.out.println(e.getMessage());
                     }
 
@@ -94,6 +96,9 @@ public class MainGUI extends JPanel {
                         Conversor conversor = new Conversor(srg);
                         fsa = conversor.getFsa();
                     } catch (Exception e) {
+                        JOptionPane.showMessageDialog(panel1, e.getMessage(), "ERROR",
+                                JOptionPane.ERROR_MESSAGE);
+
                         System.out.println(e.getMessage());
                     }
 

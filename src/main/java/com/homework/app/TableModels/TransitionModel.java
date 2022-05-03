@@ -6,6 +6,8 @@ import com.homework.app.structs.FSA.Transition;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 
 // Table Model for transitions
@@ -17,6 +19,12 @@ public class TransitionModel extends AbstractTableModel {
         this.fsa = fsa;
         this.symbols = symbols;
         this.states = new ArrayList<State>(fsa.getStates().values());
+        states.sort(new Comparator<State>() {
+            @Override
+            public int compare(State state, State t1) {
+                return state.getLabel().compareTo(t1.getLabel());
+            }
+        });
     }
     @Override
     public int getRowCount() {

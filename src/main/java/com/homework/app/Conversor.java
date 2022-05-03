@@ -34,7 +34,7 @@ public class Conversor {
         int counter = 0;
         // Creates a state for each variable
         for (Variable var : grammar.getVariables()){
-            State s = new State( Character.toString(var.getSymbol()), false);
+            State s = new State( "q"+counter, false);
             // Stores it in a Hashmap where the key for each state is the variable that it represents
             fsa.addState(var, s);
             counter++;
