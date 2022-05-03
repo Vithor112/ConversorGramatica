@@ -9,7 +9,11 @@ import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
 
 import javax.swing.*;
+import javax.swing.plaf.FontUIResource;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.text.StyleContext;
 import java.awt.*;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 public class Automaton extends JFrame {
@@ -20,6 +24,7 @@ public class Automaton extends JFrame {
     private JLabel FinalStatesJLabel;
     private JLabel InitialStatesJLabel;
     private JPanel PanelContent;
+    private JLabel Prods;
 
     FSA fsa;
 
@@ -29,11 +34,15 @@ public class Automaton extends JFrame {
 
         setContentPane(PanelContent);
         setLocationRelativeTo(null);
-        setVisible(true);
+        setTitle(fsa.getName());
 
         fillLabels();
         TransictionModel transictionModel = new TransictionModel(fsa, Alphabet.getSymbolsAllowed());
         TransactionJTable.setModel(transictionModel);
+        DefaultTableCellRenderer renderer = (DefaultTableCellRenderer) TransactionJTable.getDefaultRenderer(Object.class);
+        renderer.setHorizontalAlignment(SwingConstants.CENTER);
+
+        setVisible(true);
     }
 
 
@@ -61,13 +70,15 @@ public class Automaton extends JFrame {
      */
     private void $$$setupUI$$$() {
         PanelContent = new JPanel();
-        PanelContent.setLayout(new GridLayoutManager(11, 4, new Insets(0, 0, 0, 0), -1, -1));
+        PanelContent.setLayout(new GridLayoutManager(12, 4, new Insets(0, 0, 0, 0), -1, -1));
+        Font PanelContentFont = this.$$$getFont$$$("Fira Sans ExtraBold", Font.ITALIC, 18, PanelContent.getFont());
+        if (PanelContentFont != null) PanelContent.setFont(PanelContentFont);
         final JLabel label1 = new JLabel();
         label1.setText("States");
-        PanelContent.add(label1, new GridConstraints(3, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        PanelContent.add(label1, new GridConstraints(3, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, 1, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         StatesJLabel = new JLabel();
         StatesJLabel.setText("");
-        PanelContent.add(StatesJLabel, new GridConstraints(3, 2, 1, 2, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        PanelContent.add(StatesJLabel, new GridConstraints(3, 2, 1, 2, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JLabel label2 = new JLabel();
         label2.setText("Symbols");
         PanelContent.add(label2, new GridConstraints(4, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
@@ -75,21 +86,24 @@ public class Automaton extends JFrame {
         SymbolsJLabel.setText("");
         PanelContent.add(SymbolsJLabel, new GridConstraints(4, 2, 1, 2, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         AFDNameLabel = new JLabel();
+        Font AFDNameLabelFont = this.$$$getFont$$$("Fira Sans Condensed ExtraBold", Font.BOLD | Font.ITALIC, 18, AFDNameLabel.getFont());
+        if (AFDNameLabelFont != null) AFDNameLabel.setFont(AFDNameLabelFont);
         AFDNameLabel.setText("");
         PanelContent.add(AFDNameLabel, new GridConstraints(1, 1, 1, 3, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JLabel label3 = new JLabel();
-        label3.setText("Prods");
-        PanelContent.add(label3, new GridConstraints(8, 1, 1, 3, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         TransactionJTable = new JTable();
-        PanelContent.add(TransactionJTable, new GridConstraints(10, 1, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(150, 50), null, 0, false));
+        TransactionJTable.setAutoResizeMode(3);
+        TransactionJTable.setFillsViewportHeight(true);
+        TransactionJTable.setShowHorizontalLines(true);
+        TransactionJTable.setShowVerticalLines(true);
+        PanelContent.add(TransactionJTable, new GridConstraints(10, 1, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, new Dimension(150, 50), null, 0, false));
+        final JLabel label3 = new JLabel();
+        label3.setText("FinalStates");
+        PanelContent.add(label3, new GridConstraints(5, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JLabel label4 = new JLabel();
-        label4.setText("FinalStates");
-        PanelContent.add(label4, new GridConstraints(5, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JLabel label5 = new JLabel();
-        label5.setText("InitialStates");
-        PanelContent.add(label5, new GridConstraints(7, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        label4.setText("InitialStates");
+        PanelContent.add(label4, new GridConstraints(7, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final Spacer spacer1 = new Spacer();
-        PanelContent.add(spacer1, new GridConstraints(0, 0, 1, 4, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, 1, new Dimension(15, 15), null, null, 0, false));
+        PanelContent.add(spacer1, new GridConstraints(0, 1, 1, 3, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, 1, new Dimension(15, 15), null, null, 0, false));
         final Spacer spacer2 = new Spacer();
         PanelContent.add(spacer2, new GridConstraints(4, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(20, 20), null, 0, false));
         FinalStatesJLabel = new JLabel();
@@ -104,6 +118,35 @@ public class Automaton extends JFrame {
         PanelContent.add(spacer4, new GridConstraints(2, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_FIXED, 1, new Dimension(10, 10), null, null, 0, false));
         final Spacer spacer5 = new Spacer();
         PanelContent.add(spacer5, new GridConstraints(9, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_FIXED, 1, new Dimension(10, 10), null, null, 0, false));
+        final Spacer spacer6 = new Spacer();
+        PanelContent.add(spacer6, new GridConstraints(11, 1, 1, 3, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, 1, new Dimension(15, 15), null, null, 0, false));
+        final JLabel label5 = new JLabel();
+        Font label5Font = this.$$$getFont$$$("Fira Sans Condensed ExtraBold", Font.BOLD | Font.ITALIC, 14, label5.getFont());
+        if (label5Font != null) label5.setFont(label5Font);
+        label5.setText("Productions");
+        PanelContent.add(label5, new GridConstraints(8, 1, 1, 3, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+    }
+
+    /**
+     * @noinspection ALL
+     */
+    private Font $$$getFont$$$(String fontName, int style, int size, Font currentFont) {
+        if (currentFont == null) return null;
+        String resultName;
+        if (fontName == null) {
+            resultName = currentFont.getName();
+        } else {
+            Font testFont = new Font(fontName, Font.PLAIN, 10);
+            if (testFont.canDisplay('a') && testFont.canDisplay('1')) {
+                resultName = fontName;
+            } else {
+                resultName = currentFont.getName();
+            }
+        }
+        Font font = new Font(resultName, style >= 0 ? style : currentFont.getStyle(), size >= 0 ? size : currentFont.getSize());
+        boolean isMac = System.getProperty("os.name", "").toLowerCase(Locale.ENGLISH).startsWith("mac");
+        Font fontWithFallback = isMac ? new Font(font.getFamily(), font.getStyle(), font.getSize()) : new StyleContext().getFont(font.getFamily(), font.getStyle(), font.getSize());
+        return fontWithFallback instanceof FontUIResource ? fontWithFallback : new FontUIResource(fontWithFallback);
     }
 
     /**
