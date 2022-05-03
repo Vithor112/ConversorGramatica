@@ -31,6 +31,12 @@ public class State {
         isInitialState = initialState;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof State)
+            return ((State) o).getLabel().equals(this.label);
+        return false;
+    }
 
     @Override
     public String toString() {
