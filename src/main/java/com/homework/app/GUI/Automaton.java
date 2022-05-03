@@ -1,4 +1,4 @@
-package com.homework.app;
+package com.homework.app.GUI;
 
 import com.homework.app.TableModels.TransitionModel;
 import com.homework.app.structs.FSA.Alphabet;

@@ -1,6 +1,9 @@
-package com.homework.app;
+package com.homework.app.GUI;
 
 
+import com.homework.app.Conversor;
+import com.homework.app.GUI.Automaton;
+import com.homework.app.GUI.ListWords;
 import com.homework.app.fileHandling.SRGReader;
 import com.homework.app.fileHandling.WordListReader;
 import com.homework.app.structs.FSA.FSA;
@@ -30,6 +33,7 @@ public class MainGUI extends JPanel {
     private JButton AFDButton;
     private JButton processaPalavrasButton;
     private JFileChooser fc;
+    private WordListReader wordListReader;
     private SRG srg = null;
     private FSA fsa = null;
     private HashMap<Boolean, ArrayList<String>> processedWords = null;
@@ -45,11 +49,10 @@ public class MainGUI extends JPanel {
                 fc.setDialogTitle("Select Word List");
                 int returnValue = fc.showDialog(null, "Select");
                 if (returnValue == JFileChooser.APPROVE_OPTION) {
-                    System.out.println(fc.getSelectedFile().getPath());
                     File wordListFile = fc.getSelectedFile();
                     try {
-                        WordListReader wordListReader = new WordListReader(wordListFile);
-                        processedWords = fsa.determineWords(wordListReader.getListString());
+                        wordListReader = new WordListReader(wordListFile);
+                        processaPalavrasButton.setEnabled(true);
                     } catch (Exception e) {
                         System.out.println(e.getMessage());
                     }
@@ -61,6 +64,7 @@ public class MainGUI extends JPanel {
         processaPalavrasButton.addActionListener(new ActionListener() {
                                                      @Override
                                                      public void actionPerformed(ActionEvent actionEvent) {
+                                                         processedWords = fsa.determineWords(wordListReader.getListString());
                                                          new ListWords(processedWords);
 
                                                      }
@@ -86,6 +90,7 @@ public class MainGUI extends JPanel {
                         SRGReader srgReader = new SRGReader(SRGFile);
                         srg = srgReader.getSrg();
                         AFDButton.setEnabled(true);
+                        insiraArquivoListaDeButton.setEnabled(true);
                         Conversor conversor = new Conversor(srg);
                         fsa = conversor.getFsa();
                     } catch (Exception e) {
@@ -127,6 +132,7 @@ public class MainGUI extends JPanel {
         final Spacer spacer2 = new Spacer();
         panel2.add(spacer2, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_FIXED, 1, new Dimension(100, 100), null, null, 0, false));
         final JLabel label1 = new JLabel();
+        label1.setEnabled(false);
         Font label1Font = this.$$$getFont$$$("Fira Sans Compressed ExtraBold", Font.BOLD, 24, label1.getFont());
         if (label1Font != null) label1.setFont(label1Font);
         label1.setText("Conversor Gramática");
@@ -134,6 +140,7 @@ public class MainGUI extends JPanel {
         final Spacer spacer3 = new Spacer();
         panel2.add(spacer3, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_FIXED, 1, new Dimension(50, 50), null, null, 0, false));
         insiraArquivoListaDeButton = new JButton();
+        insiraArquivoListaDeButton.setEnabled(false);
         insiraArquivoListaDeButton.setText("Insira Arquivo Lista de Palavras");
         panel2.add(insiraArquivoListaDeButton, new GridConstraints(4, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         AFDButton = new JButton();
@@ -141,6 +148,7 @@ public class MainGUI extends JPanel {
         AFDButton.setText("AFD");
         panel2.add(AFDButton, new GridConstraints(5, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         processaPalavrasButton = new JButton();
+        processaPalavrasButton.setEnabled(false);
         processaPalavrasButton.setText("Processa Palavras");
         panel2.add(processaPalavrasButton, new GridConstraints(6, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }

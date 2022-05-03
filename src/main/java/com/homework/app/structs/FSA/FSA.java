@@ -108,6 +108,17 @@ public class FSA {
         Stack<State> actualStates = new Stack<>();
         // Setting the stack putting the initial state in it
         actualStates.push(this.getInitialState());
+        Stack<State> voidStack = new Stack<>();
+        // Executes all the empty transitions
+        voidStack.push(this.getInitialState());
+        while (!voidStack.isEmpty()) {
+            State state = voidStack.pop();
+            for (Transition transition : this.transitions.get(state))
+                if (transition.executeTransition(null) != null && !actualStates.contains(transition.executeTransition(null))) {
+                    voidStack.push(transition.executeTransition(null));
+                    actualStates.push(transition.executeTransition(null));
+                }
+        }
         // For all the symbols in the word
         for (char ch : word.toCharArray()){
             // new Stack that will store the next states
@@ -124,6 +135,18 @@ public class FSA {
                         if (stateNext != null)
                             nextStates.push(stateNext);
                     }
+            }
+
+            voidStack = (Stack<State>) nextStates.clone();
+            // Executes all the empty transitions
+            while (!voidStack.isEmpty()) {
+                State state = voidStack.pop();
+                if (this.transitions.get(state) != null)
+                    for (Transition transition : this.transitions.get(state))
+                        if (transition.executeTransition(null) != null && !nextStates.contains(transition.executeTransition(null))) {
+                            voidStack.push(transition.executeTransition(null));
+                            nextStates.push(transition.executeTransition(null));
+                        }
             }
             // If there is no more possible paths, then finalize the loop ( actualState will be empty, because all the states were popped out )
             if (nextStates.isEmpty())

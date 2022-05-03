@@ -1,4 +1,4 @@
-package com.homework.app;
+package com.homework.app.GUI;
 
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
