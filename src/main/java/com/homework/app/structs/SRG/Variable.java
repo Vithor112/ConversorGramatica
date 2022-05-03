@@ -4,6 +4,7 @@ package com.homework.app.structs.SRG;
 import com.homework.app.exceptions.InvalidSRG;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Variable {
     private final static ArrayList<Character> symbolsAllowed = new ArrayList<>();
@@ -17,13 +18,13 @@ public class Variable {
     }
 
     public char getSymbol() {
-        return symbol;
+        return this.symbol;
     }
 
     @Override
     public boolean equals(Object o) {
         if (o instanceof Variable)
-            return (((Variable) o).getSymbol() == symbol);
+            return (((Variable) o).getSymbol() == this.symbol);
         return false;
     }
 
@@ -35,6 +36,10 @@ public class Variable {
         Variable.symbolsAllowed.clear();
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(symbol);
+    }
 
     @Override
     public String toString() {

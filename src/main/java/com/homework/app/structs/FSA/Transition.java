@@ -11,7 +11,11 @@ public class Transition {
         this.symbol = symbol;
     }
 
-    public State executeTransition(char ch){
+    public State executeTransition(Character ch){
+        if (symbol ==  null && ch == null)
+            return nextState;
+        if (symbol == null)
+            return null;
         if (symbol.getSymbol() == ch)
             return nextState;
         return null;

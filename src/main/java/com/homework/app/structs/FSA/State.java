@@ -1,6 +1,8 @@
 package com.homework.app.structs.FSA;
 
 
+import java.util.Objects;
+
 public class State {
     private final String label;
     private final boolean IsFinalState;
@@ -36,6 +38,11 @@ public class State {
         if (o instanceof State)
             return ((State) o).getLabel().equals(this.label);
         return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(label);
     }
 
     @Override

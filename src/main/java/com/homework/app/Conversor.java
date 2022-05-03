@@ -31,7 +31,7 @@ public class Conversor {
         Alphabet.setSymbolsAllowed(Terminal.getSymbolsAllowed());
         int counter = 0;
         for (Variable var : grammar.getVariables()){
-            State s = new State( "q"+counter, false);
+            State s = new State( Character.toString(var.getSymbol()), false);
             fsa.addState(var, s);
             counter++;
 
