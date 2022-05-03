@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 
-
+// Main frame display all the options for the user
 public class MainGUI extends JPanel {
     public JPanel panel1;
     private JButton insiraArquivoGLUDButton;

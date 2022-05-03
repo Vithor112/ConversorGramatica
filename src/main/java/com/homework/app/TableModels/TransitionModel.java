@@ -6,13 +6,14 @@ import com.homework.app.structs.FSA.Transition;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
-import java.util.HashMap;
 
-public class TransictionModel extends AbstractTableModel {
+
+// Table Model for transitions
+public class TransitionModel extends AbstractTableModel {
     private FSA fsa;
     private ArrayList<State> states;
     private ArrayList<Character> symbols;
-    public TransictionModel(FSA fsa, ArrayList<Character> symbols){
+    public TransitionModel(FSA fsa, ArrayList<Character> symbols){
         this.fsa = fsa;
         this.symbols = symbols;
         this.states = new ArrayList<State>(fsa.getStates().values());

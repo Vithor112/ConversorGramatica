@@ -5,6 +5,7 @@ import com.homework.app.exceptions.InvalidSRG;
 
 import java.util.ArrayList;
 
+// Represents a Terminal symbol in a SRG
 public class Terminal {
     private final static ArrayList<Character> symbolsAllowed = new ArrayList<>();
     private final char symbol;

@@ -6,6 +6,7 @@ import com.homework.app.exceptions.InvalidSRG;
 import java.util.ArrayList;
 import java.util.Objects;
 
+// Represent a Variable in a SRG
 public class Variable {
     private final static ArrayList<Character> symbolsAllowed = new ArrayList<>();
     private final char symbol;

@@ -3,6 +3,8 @@ package com.homework.app.structs.FSA;
 
 import java.util.Objects;
 
+
+// Represent a state in a FSA
 public class State {
     private final String label;
     private final boolean IsFinalState;

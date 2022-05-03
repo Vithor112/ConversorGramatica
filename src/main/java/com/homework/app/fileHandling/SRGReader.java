@@ -14,6 +14,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+
+// Reads a SRG from a text file
 public class SRGReader {
     private final File file;
     private FileReader fileReader;
@@ -69,7 +71,7 @@ public class SRGReader {
             prod.setOriginalVar(new Variable((char) ch));
             ch = fileReader.read();
             int counter = 0;
-            while(((ch <= 32  && (char) ch != '\n' && (char) ch != '\r') || separators.contains((char)ch) && ch != -1)){
+            while(((ch <= 32  && (char) ch != '\n' && (char) ch != '\r') || separators.contains((char)ch)) && ch != -1){
                 if (separators.contains((char)ch))
                     counter++;
                 ch = fileReader.read();

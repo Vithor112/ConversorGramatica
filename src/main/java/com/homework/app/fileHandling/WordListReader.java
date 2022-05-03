@@ -19,6 +19,7 @@ public class WordListReader {
         readFile();
     }
 
+    // Read all words and store it in an arrayList
     private void readFile(){
         try {
             FileReader fileReader = new FileReader(file);

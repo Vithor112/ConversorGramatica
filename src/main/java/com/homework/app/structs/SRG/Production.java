@@ -1,5 +1,6 @@
 package com.homework.app.structs.SRG;
 
+// Represents a production in a SRG
 public class Production {
     private Variable originalVar;
     private final Word generatedWord;

@@ -1,7 +1,7 @@
 package com.homework.app.structs.SRG;
 
 import java.util.ArrayList;
-// Strictly regular grammar
+// Represents a Strictly regular grammar
 public class SRG {
     private String name;
     private Variable initial;

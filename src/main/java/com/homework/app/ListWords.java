@@ -1,15 +1,11 @@
 package com.homework.app;
 
-import com.homework.app.TableModels.TransictionModel;
-import com.homework.app.structs.FSA.Alphabet;
-import com.homework.app.structs.FSA.FSA;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
 
 import javax.swing.*;
 import javax.swing.plaf.FontUIResource;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.text.StyleContext;
 import java.awt.*;
 import java.util.ArrayList;
@@ -17,6 +13,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Vector;
 
+// Frame to show the user which words were accepted and refused
 public class ListWords extends JFrame {
     private JList acceptedJList;
     private JList rejectedJList;

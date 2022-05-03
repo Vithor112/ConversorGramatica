@@ -4,6 +4,7 @@ import com.homework.app.structs.SRG.Terminal;
 
 import java.util.ArrayList;
 
+// Represents the Alphabet and a terminal symbol in a FSA
 public class Alphabet  {
     private static ArrayList<Character> SymbolsAllowed = null;
     private final Character symbol;

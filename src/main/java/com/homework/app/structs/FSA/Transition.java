@@ -1,5 +1,6 @@
 package com.homework.app.structs.FSA;
 
+// Represents a transition in a FSA
 public class Transition {
     private final State actualState;
     private final State nextState;
@@ -11,6 +12,7 @@ public class Transition {
         this.symbol = symbol;
     }
 
+    // If the given char is equal to the symbol of the transition then return the NextState otherwise return null
     public State executeTransition(Character ch){
         if (symbol ==  null && ch == null)
             return nextState;

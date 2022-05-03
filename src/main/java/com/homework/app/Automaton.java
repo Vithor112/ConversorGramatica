@@ -1,6 +1,6 @@
 package com.homework.app;
 
-import com.homework.app.TableModels.TransictionModel;
+import com.homework.app.TableModels.TransitionModel;
 import com.homework.app.structs.FSA.Alphabet;
 import com.homework.app.structs.FSA.FSA;
 import com.homework.app.structs.FSA.State;
@@ -16,6 +16,8 @@ import java.awt.*;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
+
+// Frame that allow the user visualize a FSA
 public class Automaton extends JFrame {
     private JTable TransactionJTable;
     private JLabel AFDNameLabel;
@@ -24,6 +26,7 @@ public class Automaton extends JFrame {
     private JLabel FinalStatesJLabel;
     private JLabel InitialStatesJLabel;
     private JPanel PanelContent;
+    private JLabel isInfiniteJLabel;
     private JLabel Prods;
 
     FSA fsa;
@@ -37,8 +40,8 @@ public class Automaton extends JFrame {
         setTitle(fsa.getName());
 
         fillLabels();
-        TransictionModel transictionModel = new TransictionModel(fsa, Alphabet.getSymbolsAllowed());
-        TransactionJTable.setModel(transictionModel);
+        TransitionModel transitionModel = new TransitionModel(fsa, Alphabet.getSymbolsAllowed());
+        TransactionJTable.setModel(transitionModel);
         DefaultTableCellRenderer renderer = (DefaultTableCellRenderer) TransactionJTable.getDefaultRenderer(Object.class);
         renderer.setHorizontalAlignment(SwingConstants.CENTER);
 
@@ -52,6 +55,7 @@ public class Automaton extends JFrame {
         FinalStatesJLabel.setText(fsa.getFinalState().getLabel());
         InitialStatesJLabel.setText(fsa.getInitialState().getLabel());
         SymbolsJLabel.setText(Alphabet.getSymbolsAllowed().stream().map(Object::toString).collect(Collectors.joining(",")));
+        isInfiniteJLabel.setText(fsa.isInfinite() ? "true" : "false");
     }
 
     {
@@ -125,6 +129,12 @@ public class Automaton extends JFrame {
         if (label5Font != null) label5.setFont(label5Font);
         label5.setText("Productions");
         PanelContent.add(label5, new GridConstraints(8, 1, 1, 3, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final JLabel label6 = new JLabel();
+        label6.setText("Infinte");
+        PanelContent.add(label6, new GridConstraints(6, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        isInfiniteJLabel = new JLabel();
+        isInfiniteJLabel.setText("");
+        PanelContent.add(isInfiniteJLabel, new GridConstraints(6, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 
     /**
