@@ -8,14 +8,19 @@ import java.util.stream.Collectors;
 
 // Finite-state automaton
 public class FSA {
-
+    private State initialState;
+    private final String name;
     private final HashMap<Variable, State> states;
     private final HashMap<State, Transition> transitions;
 
 
-    public FSA(){
+    public FSA(String name){
+        this.name = name;
         states = new HashMap<>();
         transitions = new HashMap<>();
+    }
+    public String getName() {
+        return name;
     }
     public HashMap<Variable, State> getStates() {
         return states;
@@ -40,6 +45,16 @@ public class FSA {
     public State getFinalState(){
         return states.get(null);
     }
+
+
+    public State getInitialState() {
+        return initialState;
+    }
+
+    public void setInitialState(State initialState) {
+        this.initialState = initialState;
+    }
+
     @Override
     public String toString() {
         return "FSA{" +

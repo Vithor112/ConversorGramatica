@@ -27,7 +27,7 @@ public class Conversor {
     }
 
     private FSA convertGrammarToAutomaton(){
-        FSA fsa = new FSA();
+        FSA fsa = new FSA(grammar.getName());
         Alphabet.setSymbolsAllowed(Terminal.getSymbolsAllowed());
         int counter = 0;
         for (Variable var : grammar.getVariables()){
@@ -37,6 +37,7 @@ public class Conversor {
 
             if (var.equals(grammar.getInitial())){
                 s.setInitialState(true);
+                fsa.setInitialState(s);
             }
         }
         fsa.addState(null, new State("qf", true));

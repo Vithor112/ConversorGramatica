@@ -2,6 +2,7 @@ package com.homework.app;
 
 
 import com.homework.app.fileHandling.SRGReader;
+import com.homework.app.fileHandling.WordListReader;
 import com.homework.app.structs.FSA.FSA;
 import com.homework.app.structs.SRG.SRG;
 
@@ -21,8 +22,6 @@ public class MainGUI extends JPanel {
     private JFileChooser fc;
     private SRG srg = null;
     private FSA fsa = null;
-    private File SRGFile = null;
-
     public MainGUI(){
          fc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
 
@@ -36,6 +35,24 @@ public class MainGUI extends JPanel {
                  }
              }
          });
+         insiraArquivoListaDeButton.addActionListener(new ActionListener() {
+             @Override
+             public void actionPerformed(ActionEvent actionEvent) {
+                 fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+                 fc.setDialogTitle("Select Word List");
+                 int returnValue  = fc.showDialog(null, "Select");
+                 if (returnValue == JFileChooser.APPROVE_OPTION) {
+                     System.out.println(fc.getSelectedFile().getPath());
+                     File wordListFile = fc.getSelectedFile();
+                     try {
+                         WordListReader wordListReader = new WordListReader(wordListFile);
+                     } catch (Exception e){
+                         System.out.println(e.getMessage());
+                     }
+
+                 }
+             }
+         });
         insiraArquivoGLUDButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -44,7 +61,7 @@ public class MainGUI extends JPanel {
                 int returnValue  = fc.showDialog(null, "Select");
                 if (returnValue == JFileChooser.APPROVE_OPTION) {
                     System.out.println(fc.getSelectedFile().getPath());
-                    SRGFile = fc.getSelectedFile();
+                    File SRGFile = fc.getSelectedFile();
                     try {
                         SRGReader srgReader = new SRGReader(SRGFile);
                         SRGLabel.setText(srgReader.getSrg().getName());
