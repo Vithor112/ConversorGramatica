@@ -61,7 +61,7 @@ public class MainGUI extends JPanel {
         processaPalavrasButton.addActionListener(new ActionListener() {
                                                      @Override
                                                      public void actionPerformed(ActionEvent actionEvent) {
-
+                                                         new ListWords(processedWords);
 
                                                      }
                                                  }
