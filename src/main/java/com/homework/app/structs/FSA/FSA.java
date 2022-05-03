@@ -82,11 +82,13 @@ public class FSA {
         for (char ch : word.toCharArray()){
             Stack<State> nextStates = new Stack<>();
             while (!actualStates.isEmpty()){
-                for (Transition transition : transitions.get(actualStates.pop())){
-                    State state = transition.executeTransition(ch);
-                    if (state != null)
-                        nextStates.push(state);
-                }
+                State state = actualStates.pop();
+                if (transitions.get(state) != null)
+                    for (Transition transition : transitions.get(state)){
+                        State stateNext = transition.executeTransition(ch);
+                        if (stateNext != null)
+                            nextStates.push(stateNext);
+                    }
             }
             if (nextStates.isEmpty())
                 break;
@@ -94,11 +96,13 @@ public class FSA {
         }
         return actualStates.contains(this.getFinalState());
     }
-    public HashMap<Boolean, String> determineWords(ArrayList<String> list){
-        HashMap<Boolean, String> ret = new HashMap<>();
+    public HashMap<Boolean, ArrayList<String>> determineWords(ArrayList<String> list){
+        HashMap<Boolean, ArrayList<String>> ret = new HashMap<>();
+        ret.put(true, new ArrayList<String>());
+        ret.put(false, new ArrayList<String>());
         for (String word : list){
             Boolean result = runWord(word);
-            ret.put(result, word);
+            ret.get(result).add(word);
         }
         return ret;
     }

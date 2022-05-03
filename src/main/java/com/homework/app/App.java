@@ -21,39 +21,5 @@ public class App
         main.setVisible(true);
         main.setDefaultCloseOperation(EXIT_ON_CLOSE);
         main.setLocationRelativeTo(null);
-// TEST CONVERSION
-//        try {
-//            ArrayList<Production> prod = new ArrayList<>();
-//            ArrayList<Variable> var = new ArrayList<>();
-//            ArrayList<Terminal> ter = new ArrayList<>();
-//            ArrayList<String> s = new ArrayList<String>();
-//            s.add("a");
-//            s.add("b");
-//            Terminal.setSymbolsAllowed(s);
-//            ArrayList<String> x = new ArrayList<String>();
-//            x.add("S");
-//            x.add("A");
-//            x.add("B");
-//            Variable.setSymbolsAllowed(x);
-//            Terminal a = new Terminal("a");
-//            ter.add(a);
-//            Terminal b = new Terminal("b");
-//            ter.add(b);
-//            Variable S = new Variable("S");
-//            var.add(S);
-//            Variable A = new Variable("A");
-//            var.add(A);
-//            Variable B = new Variable("B");
-//            var.add(B);
-//            prod.add(new Production(S, new Word(a,A)));
-//            prod.add(new Production(A, new Word(null,null)));
-//            prod.add(new Production(A, new Word(b,B)));
-//            prod.add(new Production(B, new Word(a,A)));
-//            System.out.println(new Conversor(new SRG(prod, var,ter ,S)).getFsa().toString());
-//        } catch (InvalidSRG e) {
-//            System.out.println(e.getMessage());
-//        }
-
-
     }
 }

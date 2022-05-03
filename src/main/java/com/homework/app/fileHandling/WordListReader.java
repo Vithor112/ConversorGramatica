@@ -16,14 +16,15 @@ public class WordListReader {
 
     public WordListReader(File file){
         this.file = file;
+        readFile();
     }
 
     private void readFile(){
         try {
             FileReader fileReader = new FileReader(file);
             int ch;
-            StringBuilder stringBuilder = new StringBuilder();
             while ( (ch = fileReader.read()) != -1) {
+                StringBuilder stringBuilder = new StringBuilder();
                 stringBuilder.append((char)ch);
                 while ((char) (ch = fileReader.read()) != '\n' && ch != '\r'){
                     stringBuilder.append((char)ch);
